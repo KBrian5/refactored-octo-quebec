@@ -7,7 +7,7 @@ const { ObjectId } = require('mongodb')
 const PORT = process.env.PORT || 3000;
 const herokuVar = process.env.HEROKU_NAME || "local Barry"
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const client = new MongoClient(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const client = new MongoClient(process.env.uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 app.use(bodyParser.urlencoded({ extended: true }))
 app.set('view engine', 'ejs')
     
@@ -17,7 +17,7 @@ async function cxnDB(){
 
   try{
     client.connect; 
-    const collection = client.db("chillAppz").collection("drinkz");
+    const collection = client.db("testDatabase").collection("testCollection");
     const result = await collection.find().toArray();
       
     // console.log("cxnDB result: ", result);
@@ -52,7 +52,7 @@ app.post('/addDrink', async (req, res) => {
   try {
     // console.log("req.body: ", req.body) 
     client.connect; 
-    const collection = client.db("chillAppz").collection("drinkz");
+    const collection = client.db("testDatabase").collection("testCollection");
     await collection.insertOne(req.body);
       
     res.redirect('/');
@@ -73,7 +73,7 @@ app.post('/updateDrink/:id', async (req, res) => {
     console.log("req.parms.id: ", req.params.id) 
     
     client.connect; 
-    const collection = client.db("chillAppz").collection("drinkz");
+    const collection = client.db("testDatabase").collection("testCollection");
     let result = await collection.findOneAndUpdate( 
       {"_id": ObjectId(req.params.id)}, { $set: {"size": "REALLY BIG DRINK" } }
     )
@@ -95,7 +95,7 @@ app.post('/deleteDrink/:id', async (req, res) => {
     console.log("req.parms.id: ", req.params.id) 
     
     client.connect; 
-    const collection = client.db("chillAppz").collection("drinkz");
+    const collection = client.db("testDatabase").collection("testCollection");
     let result = await collection.findOneAndDelete( 
       {
         "_id": ObjectId(req.params.id)
