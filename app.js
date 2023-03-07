@@ -42,7 +42,7 @@ app.get('/', async (req, res) => {
   // console.log("get/: ", result);
 
   res.render('index', {
-    someVar : "hello from node, express, & EJS, nodemon here too!",
+    someVar : "Here you can add, update, and delete your favorite drink!",
     herokuVar : process.env.HEROKU_NAME,  
     drinkData : result
   })
@@ -76,7 +76,7 @@ app.post('/updateDrink/:id', async (req, res) => {
     client.connect; 
     const collection = client.db("testDatabase").collection("testCollection");
     let result = await collection.findOneAndUpdate( 
-      {"_id": ObjectId(req.params.id)}, { $set: {"size": "REALLY BIG DRINK" } }
+      {"_id": ObjectId(req.params.id)}, { $set: {"size": "half-gallon" } }
     )
     .then(result => {
       console.log(result); 
